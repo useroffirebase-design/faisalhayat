@@ -1,6 +1,5 @@
 google.com, pub-8303139550181688, DIRECT, f08c47fec0942fa0
 tappx.com, p8a0f3df8, DIRECT, 9f375a07da0318ec
-
 # CAS.ai Updated Nov 05, 2026
 OwnerDomain=cas.ai
 cas.ai, 922e6092, DIRECT
