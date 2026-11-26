@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Faisal Hayat Gaming — Play Beyond Limits</title>
+<meta name="description" content="Faisal Hayat Gaming — an independent game studio building immersive worlds, competitive esports experiences and unforgettable player communities." />
+<meta name="theme-color" content="#07070d" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#07070d;
+  --bg-soft:#0b0b16;
+  --panel:rgba(255,255,255,.04);
+  --panel-brd:rgba(255,255,255,.08);
+  --txt:#e9e9f4;
+  --muted:#9696ad;
+  --violet:#7c3aed;
+  --violet-lt:#a78bfa;
+  --cyan:#22d3ee;
+  --pink:#f0abfc;
+  --grad:linear-gradient(120deg,#a78bfa 0%,#22d3ee 55%,#f0abfc 100%);
+  --grad-btn:linear-gradient(120deg,#7c3aed 0%,#4f46e5 48%,#0891b2 100%);
+  --radius:18px;
+  --max:1180px;
+  --nav-h:74px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+
+/* ============================================================
+   2. RESET / BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px)}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none;padding:0}
+::selection{background:rgba(124,58,237,.55);color:#fff}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:#08080f}
+::-webkit-scrollbar-thumb{background:linear-gradient(#7c3aed,#0891b2);border-radius:99px;border:3px solid #08080f}
+
+h1,h2,h3,.font-display{font-family:'Orbitron','Inter',sans-serif;line-height:1.15;letter-spacing:-.01em}
+
+/* ============================================================
+   3. LAYOUT HELPERS
+   ============================================================ */
+.container{width:min(100% - 44px,var(--max));margin-inline:auto}
+.section{position:relative;padding:clamp(72px,10vw,132px) 0}
+.section__head{max-width:660px;margin-bottom:clamp(38px,5vw,62px)}
+.section__head.center{margin-inline:auto;text-align:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.74rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--violet-lt);margin-bottom:16px;
+}
+.eyebrow::before{content:"";width:24px;height:2px;border-radius:2px;background:var(--grad)}
+.section__head h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800}
+.section__head p{color:var(--muted);margin-top:16px;font-size:1.02rem}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ============================================================
+   4. BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 30px;border-radius:999px;
+  font-weight:600;font-size:.95rem;letter-spacing:.01em;
+  border:1px solid transparent;white-space:nowrap;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease);
+}
+.btn--primary{
+  background:var(--grad-btn);color:#fff;
+  box-shadow:0 12px 32px -12px rgba(124,58,237,.95);
+}
+.btn--primary:hover{transform:translateY(-3px);box-shadow:0 22px 46px -14px rgba(124,58,237,1)}
+.btn--ghost{
+  border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.03);color:var(--txt);
+}
+.btn--ghost:hover{
+  transform:translateY(-3px);border-color:rgba(167,139,250,.65);
+  background:rgba(124,58,237,.14);
+}
+.btn--sm{padding:11px 22px;font-size:.87rem}
+
+/* ============================================================
+   5. NAVBAR
+   ============================================================ */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  transition:background .35s var(--ease),border-color .35s var(--ease),backdrop-filter .35s;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(7,7,13,.78);
+  backdrop-filter:blur(16px) saturate(150%);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+  border-bottom-color:var(--panel-brd);
+}
+.nav__inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:24px}
+
+.logo{display:flex;align-items:center;gap:12px;font-family:'Orbitron',sans-serif;font-weight:800}
+.logo__mark{
+  width:38px;height:38px;flex:none;display:grid;place-items:center;
+  border-radius:11px;font-size:.85rem;letter-spacing:.02em;color:#fff;
+  background:var(--grad-btn);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 8px 22px -8px rgba(124,58,237,.9);
+}
+.logo__text{font-size:.98rem;letter-spacing:.04em;line-height:1.2}
+.logo__text em{display:block;font-style:normal;font-size:.6rem;letter-spacing:.34em;color:var(--violet-lt);font-weight:600}
+
+.nav__links{display:flex;align-items:center;gap:32px}
+.nav__links > a:not(.btn){
+  font-size:.92rem;font-weight:500;color:#c8c8d8;position:relative;padding:4px 0;
+  transition:color .25s;
+}
+.nav__links > a:not(.btn)::after{
+  content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;border-radius:2px;
+  background:var(--grad);transition:width .3s var(--ease);
+}
+.nav__links > a:not(.btn):hover{color:#fff}
+.nav__links > a:not(.btn):hover::after{width:100%}
+
+.nav__toggle{
+  display:none;width:44px;height:44px;border-radius:12px;
+  border:1px solid var(--panel-brd);background:rgba(255,255,255,.04);
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.nav__toggle span{
+  display:block;width:19px;height:2px;border-radius:2px;background:#e9e9f4;
+  transition:transform .3s var(--ease),opacity .25s;
+}
+.nav.open .nav__toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav.open .nav__toggle span:nth-child(2){opacity:0}
+.nav.open .nav__toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ============================================================
+   6. HERO
+   ============================================================ */
+.hero{
+  position:relative;isolation:isolate;
+  min-height:100svh;display:grid;place-items:center;
+  padding:calc(var(--nav-h) + 64px) 0 96px;
+  overflow:hidden;text-align:center;
+}
+.hero__bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero__inner{position:relative;z-index:1}
+
+.grid-lines{
+  position:absolute;inset:-10%;
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 65% 60% at 50% 42%,#000 0%,transparent 78%);
+  mask-image:radial-gradient(ellipse 65% 60% at 50% 42%,#000 0%,transparent 78%);
+  animation:gridDrift 26s linear infinite;
+}
+@keyframes gridDrift{to{background-position:64px 64px,64px 64px}}
+
+.orb{position:absolute;border-radius:50%;filter:blur(95px);opacity:.6}
+.orb--1{
+  width:min(560px,80vw);aspect-ratio:1;
+  background:radial-gradient(circle,#7c3aed 0%,transparent 70%);
+  top:-14%;left:-10%;animation:float1 15s ease-in-out infinite;
+}
+.orb--2{
+  width:min(520px,80vw);aspect-ratio:1;
+  background:radial-gradient(circle,#0891b2 0%,transparent 70%);
+  bottom:-18%;right:-8%;animation:float2 19s ease-in-out infinite;
+}
+.orb--3{
+  width:min(360px,60vw);aspect-ratio:1;
+  background:radial-gradient(circle,#db2777 0%,transparent 70%);
+  top:35%;left:50%;transform:translateX(-50%);opacity:.32;
+  animation:float1 22s ease-in-out infinite reverse;
+}
+@keyframes float1{50%{transform:translate(60px,55px) scale(1.12)}}
+@keyframes float2{50%{transform:translate(-55px,-45px) scale(1.15)}}
+
+.pill{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:9px 18px;border-radius:999px;
+  font-size:.76rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#c9b8fd;background:rgba(124,58,237,.12);
+  border:1px solid rgba(124,58,237,.4);
+  backdrop-filter:blur(8px);
+}
+.pill .dot{
+  width:7px;height:7px;border-radius:50%;background:#34d399;
+  box-shadow:0 0 0 4px rgba(52,211,153,.18);animation:pulse 2s infinite;
+}
+@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(52,211,153,0)}}
+
+.hero h1{
+  font-size:clamp(2.4rem,7.6vw,5.2rem);
+  font-weight:900;letter-spacing:-.02em;line-height:1.06;
+  margin:26px auto 22px;max-width:15ch;
+  filter:drop-shadow(0 0 34px rgba(124,58,237,.35));
+}
+.hero__sub{
+  max-width:620px;margin:0 auto;
+  color:var(--muted);font-size:clamp(1rem,1.6vw,1.14rem);
+}
+.hero__actions{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:40px}
+.hero__scroll{
+  margin-top:64px;display:inline-flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:#5e5e78;
+}
+.hero__scroll i{
+  width:22px;height:36px;border:1.5px solid rgba(255,255,255,.2);border-radius:999px;
+  position:relative;display:block;
+}
+.hero__scroll i::after{
+  content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;border-radius:2px;
+  background:var(--violet-lt);transform:translateX(-50%);
+  animation:scrollDot 1.8s var(--ease) infinite;
+}
+@keyframes scrollDot{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}100%{opacity:0;transform:translate(-50%,13px)}}
+
+/* ============================================================
+   7. STATS
+   ============================================================ */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:26px;
+  padding:clamp(26px,4vw,44px);
+  border-radius:26px;border:1px solid var(--panel-brd);
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+  backdrop-filter:blur(10px);
+  box-shadow:0 30px 80px -50px rgba(124,58,237,.9);
+}
+.stat{position:relative;text-align:center}
+.stat + .stat::before{
+  content:"";position:absolute;left:-13px;top:14%;height:72%;width:1px;
+  background:linear-gradient(transparent,rgba(255,255,255,.16),transparent);
+}
+.stat__num{
+  font-family:'Orbitron',sans-serif;font-weight:800;
+  font-size:clamp(1.6rem,3.6vw,2.5rem);
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat__label{
+  margin-top:4px;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+
+/* ============================================================
+   8. ABOUT
+   ============================================================ */
+.about__grid{
+  display:grid;grid-template-columns:1.05fr .95fr;
+  gap:clamp(34px,5vw,72px);align-items:center;
+}
+.about__text p{color:var(--muted);margin-top:18px}
+.checklist{margin-top:30px;display:grid;gap:14px}
+.checklist li{display:flex;gap:13px;align-items:flex-start;font-size:.96rem}
+.checklist li svg{flex:none;margin-top:3px}
+
+/* Player card */
+.player-card{
+  position:relative;padding:clamp(24px,3.4vw,34px);border-radius:24px;
+  border:1px solid var(--panel-brd);
+  background:linear-gradient(160deg,rgba(124,58,237,.16),rgba(8,145,178,.08) 55%,rgba(255,255,255,.02));
+  box-shadow:0 40px 90px -50px rgba(124,58,237,1);
+  overflow:hidden;
+}
+.player-card::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(420px circle at 82% 0%,rgba(34,211,238,.22),transparent 62%);
+  pointer-events:none;
+}
+.player-card__top{display:flex;align-items:center;gap:15px;position:relative}
+.avatar{
+  width:56px;height:56px;flex:none;border-radius:16px;display:grid;place-items:center;
+  font-family:'Orbitron',sans-serif;font-weight:800;font-size:1rem;color:#fff;
+  background:var(--grad-btn);
+  box-shadow:0 0 0 1px rgba(255,255,255,.16) inset,0 10px 26px -10px rgba(124,58,237,1);
+}
+.player-card__name{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1rem}
+.player-card__role{font-size:.79rem;color:var(--muted);letter-spacing:.04em}
+.badge{
+  margin-left:auto;flex:none;padding:6px 12px;border-radius:999px;
+  font-size:.68rem;font-weight:800;letter-spacing:.12em;
+  color:#0a0a12;background:linear-gradient(120deg,#a78bfa,#22d3ee);
+}
+.bars{margin-top:30px;display:grid;gap:17px;position:relative}
+.bar__label{display:flex;justify-content:space-between;font-size:.8rem;color:#b9b9cc;margin-bottom:7px}
+.bar__track{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar__fill{
+  height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,#7c3aed,#22d3ee);
+  transition:width 1.3s var(--ease) .15s;
+}
+.reveal.in .bar__fill{width:var(--w)}
+.player-card__foot{
+  margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);
+  display:flex;justify-content:space-between;gap:12px;position:relative;
+}
+.player-card__foot div{text-align:center;flex:1}
+.player-card__foot strong{display:block;font-family:'Orbitron',sans-serif;font-size:.98rem}
+.player-card__foot span{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* ============================================================
+   9. CARDS (games / features / testimonials)
+   ============================================================ */
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+
+.card{
+  position:relative;padding:clamp(24px,3vw,32px);border-radius:var(--radius);
+  border:1px solid var(--panel-brd);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.014));
+  overflow:hidden;
+  transition:transform .38s var(--ease),border-color .38s var(--ease),box-shadow .38s var(--ease);
+}
+.card::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),rgba(124,58,237,.24),transparent 62%);
+  opacity:0;transition:opacity .38s var(--ease);
+}
+.card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.45);box-shadow:0 30px 60px -32px rgba(124,58,237,.95)}
+.card:hover::after{opacity:1}
+
+.card__icon{
+  width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
+  font-size:1.5rem;margin-bottom:20px;
+  background:linear-gradient(150deg,rgba(124,58,237,.35),rgba(34,211,238,.18));
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 10px 26px -14px rgba(124,58,237,.95);
+}
+.card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.93rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tag{
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px;color:#c9b8fd;
+  background:rgba(124,58,237,.14);border:1px solid rgba(124,58,237,.32);
+}
+
+/* Testimonials */
+.quote{font-size:.95rem;color:#cfcfdd;font-style:italic}
+.quote::before{
+  content:"“";display:block;font-family:'Orbitron',sans-serif;font-size:2.6rem;line-height:1;
+  color:var(--violet-lt);margin-bottom:10px;opacity:.85;
+}
+.author{display:flex;align-items:center;gap:12px;margin-top:22px}
+.author__av{
+  width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:.78rem;font-weight:800;color:#fff;
+  background:linear-gradient(140deg,#7c3aed,#0891b2);
+}
+.author__name{font-size:.88rem;font-weight:600}
+.author__meta{font-size:.74rem;color:var(--muted)}
+.stars{color:#fbbf24;font-size:.8rem;letter-spacing:.18em;margin-bottom:14px}
+
+/* ============================================================
+   10. CONTACT
+   ============================================================ */
+.contact__grid{
+  display:grid;grid-template-columns:1.05fr .95fr;
+  gap:clamp(28px,4vw,56px);align-items:start;
+}
+.panel{
+  padding:clamp(26px,3.6vw,42px);border-radius:24px;
+  border:1px solid var(--panel-brd);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.014));
+}
+.form__row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:grid;gap:8px;margin-bottom:18px}
+.field label{
+  font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.field input,.field textarea,.field select{
+  width:100%;padding:14px 16px;border-radius:12px;font:inherit;font-size:.94rem;
+  background:rgba(255,255,255,.04);border:1px solid var(--panel-brd);
+  color:var(--txt);outline:none;transition:.26s var(--ease);
+}
+.field textarea{resize:vertical;min-height:128px}
+.field input::placeholder,.field textarea::placeholder{color:#5f5f78}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:rgba(167,139,250,.75);
+  background:rgba(124,58,237,.09);
+  box-shadow:0 0 0 4px rgba(124,58,237,.16);
+}
+.form__note{font-size:.76rem;color:#5f5f78;margin-top:14px}
+
+.info-list{display:grid;gap:16px;margin-top:6px}
+.info{
+  display:flex;gap:15px;align-items:center;padding:16px 18px;border-radius:16px;
+  border:1px solid var(--panel-brd);background:rgba(255,255,255,.03);
+  transition:.3s var(--ease);
+}
+.info:hover{border-color:rgba(167,139,250,.45);background:rgba(124,58,237,.1);transform:translateX(4px)}
+.info__icon{
+  width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(150deg,rgba(124,58,237,.35),rgba(34,211,238,.16));
+  border:1px solid rgba(255,255,255,.09);
+}
+.info__label{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.info__value{font-size:.93rem;font-weight:600}
+
+/* ============================================================
+   11. FOOTER
+   ============================================================ */
+.footer{
+  border-top:1px solid var(--panel-brd);
+  background:rgba(255,255,255,.014);
+  padding:clamp(46px,6vw,64px) 0 30px;
+}
+.footer__top{
+  display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap;
+  padding-bottom:36px;border-bottom:1px solid var(--panel-brd);
+}
+.footer__brand{max-width:330px}
+.footer__brand p{color:var(--muted);font-size:.9rem;margin-top:16px}
+.footer__cols{display:flex;gap:clamp(30px,6vw,80px);flex-wrap:wrap}
+.footer__col h4{
+  font-family:'Inter',sans-serif;font-size:.74rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#fff;margin-bottom:16px;
+}
+.footer__col a{display:block;font-size:.89rem;color:var(--muted);padding:5px 0;transition:color .22s}
+.footer__col a:hover{color:var(--violet-lt)}
+.footer__bottom{
+  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  padding-top:26px;font-size:.82rem;color:#5f5f78;
+}
+.socials{display:flex;gap:10px}
+.socials a{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  border:1px solid var(--panel-brd);background:rgba(255,255,255,.03);
+  transition:.28s var(--ease);color:#b9b9cc;
+}
+.socials a:hover{
+  color:#fff;border-color:rgba(167,139,250,.6);background:rgba(124,58,237,.16);
+  transform:translateY(-3px);
+}
+
+/* ============================================================
+   12. REVEAL ANIMATION
+   ============================================================ */
+.reveal{
+  opacity:0;transform:translateY(26px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================================================
+   13. TOAST
+   ============================================================ */
+.toast{
+  position:fixed;left:50%;bottom:32px;z-index:200;
+  transform:translate(-50%,160%);
+  padding:15px 26px;border-radius:999px;font-size:.9rem;font-weight:600;color:#fff;
+  background:linear-gradient(120deg,#7c3aed,#0891b2);
+  box-shadow:0 24px 60px -18px rgba(124,58,237,1);
+  transition:transform .5s var(--ease);
+}
+.toast.show{transform:translate(-50%,0)}
+
+/* ============================================================
+   14. RESPONSIVE
+   ============================================================ */
+@media (max-width:980px){
+  .about__grid,.contact__grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr);gap:30px 20px}
+  .stat:nth-child(3)::before{display:none}
+}
+@media (max-width:860px){
+  .nav__toggle{display:flex}
+  .nav__links{
+    position:fixed;top:var(--nav-h);left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:4px;
+    padding:16px 22px 26px;
+    background:rgba(8,8,15,.97);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--panel-brd);
+    transform:translateY(-125%);opacity:0;pointer-events:none;
+    transition:transform .38s var(--ease),opacity .3s var(--ease);
+  }
+  .nav.open .nav__links{transform:translateY(0);opacity:1;pointer-events:auto}
+  .nav__links > a:not(.btn){padding:13px 2px;font-size:1rem}
+  .nav__links .btn{margin-top:12px}
+  .hero__scroll{display:none}
+}
+@media (max-width:620px){
+  .form__row{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr;gap:26px}
+  .stat + .stat::before{
+    left:0;top:-13px;height:1px;width:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);
+  }
+  .footer__bottom{flex-direction:column;text-align:center}
+}
+
+/* ============================================================
+   15. REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+
+<body id="top">
+
+<!-- ================= NAVBAR ================= -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="#top" class="logo" aria-label="Faisal Hayat Gaming — Home">
+      <span class="logo__mark">FH</span>
+      <span class="logo__text">Faisal Hayat<em>Gaming</em></span>
+    </a>
+
+    <nav class="nav__links" id="navLinks" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#games">Games</a>
+      <a href="#why">Why Us</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn--primary btn--sm">Join Now</a>
+    </nav>
+
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="grid-lines"></div>
+      <div class="orb orb--1"></div>
+      <div class="orb orb--2"></div>
+      <div class="orb orb--3"></div>
+    </div>
+
+    <div class="container hero__inner">
+      <span class="pill reveal"><span class="dot"></span> Next-gen gaming studio</span>
+
+      <h1 class="reveal">Faisal Hayat <span class="grad-text">Gaming</span></h1>
+
+      <p class="hero__sub reveal">
+        We craft immersive worlds, adrenaline-fueled competitive experiences and
+        communities that never log off. Built by gamers — for gamers.
+      </p>
+
+      <div class="hero__actions reveal">
+        <a href="#games" class="btn btn--primary">Explore Our Games</a>
+        <a href="#contact" class="btn btn--ghost">Join the Community</a>
+      </div>
+
+      <div class="hero__scroll reveal" aria-hidden="true">
+        <i></i>
+        Scroll
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="stats reveal">
+        <div class="stat">
+          <div class="stat__num" data-count="12" data-suffix="M+">0</div>
+          <div class="stat__label">Players</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num" data-count="38" data-suffix="+">0</div>
+          <div class="stat__label">Titles Shipped</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num" data-count="140" data-suffix="+">0</div>
+          <div class="stat__label">Tournaments</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num" data-count="9" data-suffix="">0</div>
+          <div class="stat__label">Industry Awards</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section" id="about">
+    <div class="container about__grid">
+
+      <div class="about__text reveal">
+        <span class="eyebrow">About Us</span>
+        <h2>Built by gamers,<br>engineered for players</h2>
+        <p>
+          Faisal Hayat Gaming started as a small team of modders and competitive players
+          who believed games should feel alive. Today we're an independent studio
+          shipping original titles, running esports events, and building tools that
+          help creators launch faster.
+        </p>
+        <p>
+          Every world we build starts with one question: <strong>is this fun?</strong>
+          Everything else — the engine, the art, the netcode — exists to serve that.
+        </p>
+
+        <ul class="checklist">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Original IPs across PC, console and mobile</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>In-house esports &amp; tournament operations</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Player-first updates driven by community feedback</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Player / founder card -->
+      <div class="player-card reveal">
+        <div class="player-card__top">
+          <div class="avatar">FH</div>
+          <div>
+            <div class="player-card__name">Faisal Hayat</div>
+            <div class="player-card__role">Founder &amp; Creative Director</div>
+          </div>
+          <span class="badge">LVL 99</span>
+        </div>
+
+        <div class="bars">
+          <div>
+            <div class="bar__label"><span>Game Design</span><span>96</span></div>
+            <div class="bar__track"><div class="bar__fill" style="--w:96%"></div></div>
+          </div>
+          <div>
+            <div class="bar__label"><span>Engineering</span><span>90</span></div>
+            <div class="bar__track"><div class="bar__fill" style="--w:90%"></div></div>
+          </div>
+          <div>
+            <div class="bar__label"><span>Community</span><span>100</span></div>
+            <div class="bar__track"><div class="bar__fill" style="--w:100%"></div></div>
+          </div>
+        </div>
+
+        <div class="player-card__foot">
+          <div><strong>2016</strong><span>Founded</span></div>
+          <div><strong>42</strong><span>Team</span></div>
+          <div><strong>∞</strong><span>Passion</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= GAMES ================= -->
+  <section class="section" id="games">
+    <div class="container">
+      <div class="section__head center reveal">
+        <span class="eyebrow">Our Games</span>
+        <h2>Worlds worth getting lost in</h2>
+        <p>From neon-lit shooters to sprawling fantasy realms — here's a taste of what we're building.</p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="card__icon">🚀</div>
+          <h3>Nebula Strike</h3>
+          <p>A fast-paced sci-fi shooter with zero-gravity combat, destructible stations and 64-player battles.</p>
+          <div class="tags"><span class="tag">FPS</span><span class="tag">Multiplayer</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🐉</div>
+          <h3>Realm of Ashes</h3>
+          <p>An open-world dark fantasy RPG where every choice reshapes the kingdom you're trying to save.</p>
+          <div class="tags"><span class="tag">RPG</span><span class="tag">Open World</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🏎️</div>
+          <h3>Velocity X</h3>
+          <p>Arcade racing at 300&nbsp;km/h with gravity-defying tracks and a full seasonal ranked ladder.</p>
+          <div class="tags"><span class="tag">Racing</span><span class="tag">Ranked</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🧟</div>
+          <h3>Dead Signal</h3>
+          <p>Co-op survival horror. Four players, one abandoned facility, and something that can hear you whisper.</p>
+          <div class="tags"><span class="tag">Co-op</span><span class="tag">Horror</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">⚔️</div>
+          <h3>Arena Clash</h3>
+          <p>Our flagship esports title — 5v5 hero brawls with a global circuit and a $250K annual prize pool.</p>
+          <div class="tags"><span class="tag">Esports</span><span class="tag">MOBA</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🕹️</div>
+          <h3>Pixel Quest</h3>
+          <p>A love letter to 16-bit platformers, rebuilt with modern physics and a level editor for players.</p>
+          <div class="tags"><span class="tag">Retro</span><span class="tag">Indie</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHY US ================= -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="section__head center reveal">
+        <span class="eyebrow">Why Us</span>
+        <h2>More than a studio</h2>
+        <p>We handle the tech, the tournaments and the community — so players can focus on playing.</p>
+      </div>
+
+      <div class="grid-4">
+        <article class="card reveal">
+          <div class="card__icon">⚡</div>
+          <h3>Low-Latency Netcode</h3>
+          <p>Global edge servers and rollback netcode keep matches tight, no matter where you queue from.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🏆</div>
+          <h3>Esports Ready</h3>
+          <p>Full tournament tooling, spectator modes and anti-cheat built into every competitive title.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🎨</div>
+          <h3>Cutting-Edge Engine</h3>
+          <p>Custom rendering pipeline with ray-traced lighting that scales from laptops to high-end rigs.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🤝</div>
+          <h3>Community First</h3>
+          <p>Public roadmaps, monthly playtests and a Discord where the devs actually answer.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section__head center reveal">
+        <span class="eyebrow">Player Reviews</span>
+        <h2>What the community says</h2>
+      </div>
+
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="quote">Arena Clash is the most balanced competitive game I've played in years. The devs actually listen — patches drop within days of feedback.</p>
+          <div class="author">
+            <div class="author__av">AR</div>
+            <div>
+              <div class="author__name">Ayesha R.</div>
+              <div class="author__meta">Ranked Player · Season 4 Champion</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="quote">I've been following Faisal Hayat Gaming since their first jam project. The jump in quality with every release is genuinely unreal.</p>
+          <div class="author">
+            <div class="author__av">MK</div>
+            <div>
+              <div class="author__name">Moiz K.</div>
+              <div class="author__meta">Content Creator · 240K subs</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="quote">Ran our whole campus tournament on their platform. Setup took ten minutes, zero crashes, and the spectator view was clean.</p>
+          <div class="author">
+            <div class="author__av">SN</div>
+            <div>
+              <div class="author__name">Sana N.</div>
+              <div class="author__meta">Esports Organizer</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section__head center reveal">
+        <span class="eyebrow">Get In Touch</span>
+        <h2>Let's build something legendary</h2>
+        <p>Partnerships, publishing, press or just want to say hi? Drop us a message.</p>
+      </div>
+
+      <div class="contact__grid">
+
+        <!-- Form -->
+        <div class="panel reveal">
+          <form id="contactForm" novalidate>
+            <div class="form__row">
+              <div class="field">
+                <label for="name">Your Name</label>
+                <input id="name" name="name" type="text" placeholder="Jane Player" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="jane@example.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="topic">Topic</label>
+              <input id="topic" name="topic" type="text" placeholder="Partnership / Press / Support">
+            </div>
+
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us what you have in mind..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary" style="width:100%">Send Message</button>
+            <p class="form__note">We reply within 1–2 business days. No spam, ever.</p>
+          </form>
+        </div>
+
+        <!-- Info -->
+        <div class="panel reveal">
+          <h3 style="font-size:1.1rem;margin-bottom:18px">Contact Details</h3>
+
+          <div class="info-list">
+            <a class="info" href="mailto:hello@faisalhayatgaming.com">
+              <span class="info__icon">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6 10-6"/></svg>
+              </span>
+              <span>
+                <span class="info__label">Email</span>
+                <span class="info__value">hello@faisalhayatgaming.com</span>
+              </span>
+            </a>
+
+            <a class="info" href="#">
+              <span class="info__icon">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </span>
+              <span>
+                <span class="info__label">Discord</span>
+                <span class="info__value">discord.gg/faisalhayatgaming</span>
+              </span>
+            </a>
+
+            <div class="info">
+              <span class="info__icon">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <span>
+                <span class="info__label">Studio</span>
+                <span class="info__value">Lahore, Pakistan</span>
+              </span>
+            </div>
+
+            <div class="info">
+              <span class="info__icon">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <span>
+                <span class="info__label">Support Hours</span>
+                <span class="info__value">Mon – Sat · 10:00 – 20:00 PKT</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="#top" class="logo">
+          <span class="logo__mark">FH</span>
+          <span class="logo__text">Faisal Hayat<em>Gaming</em></span>
+        </a>
+        <p>Independent game studio building immersive worlds and competitive experiences since 2016.</p>
+      </div>
+
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4>Studio</h4>
+          <a href="#about">About</a>
+          <a href="#games">Games</a>
+          <a href="#why">Why Us</a>
+          <a href="#reviews">Reviews</a>
+        </div>
+        <div class="footer__col">
+          <h4>Community</h4>
+          <a href="#">Discord</a>
+          <a href="#">Tournaments</a>
+          <a href="#">Creator Program</a>
+          <a href="#">Support</a>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">EULA</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year">2025</span> Faisal Hayat Gaming. All rights reserved.</span>
+      <div class="socials">
+        <a href="#" aria-label="Discord">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.5A19 19 0 0 0 15.6 3l-.3.6a15 15 0 0 1 4.2 1.6 13.7 13.7 0 0 0-11-.5l-.2.1A15 15 0 0 1 8.7 3.6L8.4 3a19 19 0 0 0-4.7 1.5C.9 9.1.2 13.6.5 18a19 19 0 0 0 5.8 3l1.2-1.9a12 12 0 0 1-2-1l.5-.4a13.6 13.6 0 0 0 12 0l.5.4a12 12 0 0 1-2 1l1.2 1.9a19 19 0 0 0 5.8-3c.4-5-.7-9.5-3.2-13.5ZM8.4 15.3c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3Zm7.2 0c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3Z"/></svg>
+        </a>
+        <a href="#" aria-label="X / Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.9l-5-6.6L5.3 22H2.2l7.3-8.3L1.6 2h7l4.7 6.2L18.9 2Zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20Z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.4-.4-5a2.6 2.6 0 0 0-1.8-1.8C19.2 4.8 12 4.8 12 4.8s-7.2 0-8.8.4A2.6 2.6 0 0 0 1.4 7C1 8.6 1 12 1 12s0 3.4.4 5a2.6 2.6 0 0 0 1.8 1.8c1.6.4 8.8.4 8.8.4s7.2 0 8.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-5 .4-5ZM9.8 15.5v-7l6 3.5-6 3.5Z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast" role="status" aria-live="polite">✅ Message sent — we'll get back to you soon!</div>
+
+<script>
+/* ============================================================
+   1. NAVBAR — scroll state + mobile toggle
+   ============================================================ */
+const nav = document.getElementById('nav');
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+navToggle.addEventListener('click', () => {
+  const isOpen = nav.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    nav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* ============================================================
+   2. SCROLL REVEAL (with staggered delay per group)
+   ============================================================ */
+const revealEls = document.querySelectorAll('.reveal');
+
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => {
+    // stagger siblings for a nicer cascade
+    const siblings = [...el.parentElement.children].filter(c => c.classList.contains('reveal'));
+    const index = siblings.indexOf(el);
+    if (index > 0) el.style.transitionDelay = Math.min(index * 90, 360) + 'ms';
+    revealObserver.observe(el);
+  });
+} else {
+  revealEls.forEach(el => el.classList.add('in'));
+}
+
+/* ============================================================
+   3. STAT COUNTERS
+   ============================================================ */
+const counters = document.querySelectorAll('[data-count]');
+
+if ('IntersectionObserver' in window && counters.length) {
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = Number(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1500;
+      let startTime = null;
+
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+
+      requestAnimationFrame(step);
+      countObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(c => countObserver.observe(c));
+}
+
+/* ============================================================
+   4. CARD SPOTLIGHT (mouse-follow glow)
+   ============================================================ */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+  });
+});
+
+/* ============================================================
+   5. CONTACT FORM (demo handler)
+   → Replace the block below with your real endpoint / API call.
+   ============================================================ */
+const form = document.getElementById('contactForm');
+const toast = document.getElementById('toast');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const message = form.message.value.trim();
+
+  if (!name || !email || !message) {
+    showToast('⚠️ Please fill in your name, email and message.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast('⚠️ Please enter a valid email address.');
+    return;
+  }
+
+  // ---- TODO: send data to your backend here ----
+  // await fetch('/api/contact', { method:'POST', body: new FormData(form) });
+
+  form.reset();
+  showToast('✅ Message sent — we\'ll get back to you soon!');
+});
+
+let toastTimer;
+function showToast(text) {
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3800);
+}
+
+/* ============================================================
+   6. FOOTER YEAR
+   ============================================================ */
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
